@@ -1,0 +1,100 @@
+import {request} from "../request";
+
+export const getAllDataset=(id)=>{
+    return new Promise((resolve, reject) => {
+        resolve({data:[
+                {
+                    id:1,
+                    name:"数据集1",
+                    state:"导入",
+                    comment:"先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也。"
+                },
+                {
+                    id:2,
+                    name:"数据集2",
+                    state:"验证",
+                    comment:"先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也。"
+                },
+            ]})
+    })
+}
+export const getDatasetDetail=(id)=>{
+    if(id===1){
+        return new Promise((resolve, reject) => {
+            resolve({
+                data:{
+                    id:1,
+                    name:"数据集1",
+                    comment:"先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也。",
+                    path:"c:/data",
+                    createrUserId:1,
+                    storeFormat:"png",
+                    state:"导入",
+                    batches:[
+                        {
+                            id:1,
+                            name:"数据batch1",
+                            datasetId:1,
+                            state:"导入",
+                            samplesNum:100,
+                            createdAt:100,
+                            updatedAt:100,
+                            deletedAt:100,
+                            fileSize:100
+                        },
+                        {
+                            id:2,
+                            name:"数据batch2",
+                            datasetId:1,
+                            state:"删除",
+                            samplesNum:200,
+                            createdAt:200,
+                            updatedAt:200,
+                            deletedAt:200,
+                            fileSize:200
+                        },
+                    ]
+                }
+            })
+
+        })
+    }
+    else return new Promise((resolve, reject) => {
+        resolve({
+            data:{
+                id:2,
+                name:"数据集2",
+                comment:"先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也。",
+                path:"c:/data2",
+                createrUserId:1,
+                storeFormat:"png",
+                state:"导入",
+                batches:[
+                    {
+                        id:1,
+                        name:"数据batch1",
+                        datasetId:2,
+                        state:"导入",
+                        samplesNum:100,
+                        createdAt:100,
+                        updatedAt:100,
+                        deletedAt:100,
+                        fileSize:100
+                    },
+                    {
+                        id:2,
+                        name:"数据batch2",
+                        datasetId:2,
+                        state:"删除",
+                        samplesNum:200,
+                        createdAt:200,
+                        updatedAt:200,
+                        deletedAt:200,
+                        fileSize:200
+                    },
+                ]
+            }
+        })
+
+    })
+}
