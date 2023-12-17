@@ -1,0 +1,121 @@
+definitions:
+  dao.Dataset:
+    properties:
+      comment:
+        description: 数据集备注
+        type: string
+      id:
+        description: 数据集自增id
+        type: integer
+      name:
+        description: 数据集名称
+        type: string
+      path:
+        description: 数据集保存路径
+        type: string
+      state:
+        allOf:
+        - $ref: '#/definitions/dao.DatasetState'
+        description: 数据集保存状态
+      storeFormat:
+        description: 数据集保存格式
+        type: string
+    type: object
+  dao.DatasetState:
+    enum:
+    - Failed
+    - Ready
+    - Deleted
+    type: string
+    x-enum-varnames:
+    - StateFailed
+    - StateReady
+    - StateDeleted
+  v1.APIError:
+    properties:
+      error:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/datasets:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of all datasets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of datasets
+          schema:
+            items:
+              $ref: '#/definitions/dao.Dataset'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/v1.APIError'
+      summary: Get all datasets
+      tags:
+      - datasets
+    post:
+      consumes:
+      - application/json
+      description: Adds a new dataset to the database
+      parameters:
+      - description: Dataset to be added
+        in: body
+        name: dataset
+        required: true
+        schema:
+          $ref: '#/definitions/dao.Dataset'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Dataset inserted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/v1.APIError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/v1.APIError'
+      summary: Insert a new dataset
+      tags:
+      - datasets
+  /api/v1/datasets/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a dataset based on its ID
+      parameters:
+      - description: Dataset ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Dataset
+          schema:
+            $ref: '#/definitions/dao.Dataset'
+        "400":
+          description: invalid id
+          schema:
+            $ref: '#/definitions/v1.APIError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/v1.APIError'
+      summary: Get a dataset by ID
+      tags:
+      - datasets
+swagger: "2.0"

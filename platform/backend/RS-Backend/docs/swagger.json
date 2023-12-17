@@ -1,0 +1,184 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/datasets": {
+            "get": {
+                "description": "Retrieves a list of all datasets",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "datasets"
+                ],
+                "summary": "Get all datasets",
+                "responses": {
+                    "200": {
+                        "description": "List of datasets",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dao.Dataset"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/v1.APIError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Adds a new dataset to the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "datasets"
+                ],
+                "summary": "Insert a new dataset",
+                "parameters": [
+                    {
+                        "description": "Dataset to be added",
+                        "name": "dataset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dao.Dataset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dataset inserted successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "$ref": "#/definitions/v1.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/v1.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/datasets/{id}": {
+            "get": {
+                "description": "Retrieves a dataset based on its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "datasets"
+                ],
+                "summary": "Get a dataset by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Dataset ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dataset",
+                        "schema": {
+                            "$ref": "#/definitions/dao.Dataset"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid id",
+                        "schema": {
+                            "$ref": "#/definitions/v1.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/v1.APIError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dao.Dataset": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "description": "数据集备注",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "数据集自增id",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "数据集名称",
+                    "type": "string"
+                },
+                "path": {
+                    "description": "数据集保存路径",
+                    "type": "string"
+                },
+                "state": {
+                    "description": "数据集保存状态",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dao.DatasetState"
+                        }
+                    ]
+                },
+                "storeFormat": {
+                    "description": "数据集保存格式",
+                    "type": "string"
+                }
+            }
+        },
+        "dao.DatasetState": {
+            "type": "string",
+            "enum": [
+                "Failed",
+                "Ready",
+                "Deleted"
+            ],
+            "x-enum-varnames": [
+                "StateFailed",
+                "StateReady",
+                "StateDeleted"
+            ]
+        },
+        "v1.APIError": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

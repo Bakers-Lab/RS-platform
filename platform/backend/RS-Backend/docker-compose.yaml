@@ -1,0 +1,15 @@
+version: "3"
+services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    volumes:
+      - "./.persistence/db:/var/lib/postgresql/data"
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+    environment:
+      - POSTGRES_DB=RS_DB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    # reserved for dedicated db instance
+    ports:
+      - 5432:5432

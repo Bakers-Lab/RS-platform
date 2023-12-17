@@ -2,24 +2,27 @@ package api
 
 import (
 	v1 "RS-Backend/api/v1"
-	"RS-Backend/middleware"
+	"RS-Backend/dal/db"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // SetupRouter configures the routes for the application.
-func SetupRouter() *gin.Engine {
+func SetupRouter(dB db.IDB) *gin.Engine {
 	r := gin.Default()
 
 	api := r.Group("/api")
 	{
 		v1Group := api.Group("/v1")
 		{
-			v1Group.POST("/register", v1.Register)
-			v1Group.POST("/login", v1.Login)
-			v1Group.GET("/users", middleware.AuthMiddleware(), v1.GetUsers) // Protected route
+			v1Group.GET("/test", v1.TestHandler)
+			// 集成 Swagger
+			v1.RegisterDatasetRoutes(v1Group, dB)
 		}
-	}
 
+	}
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return r
 }
