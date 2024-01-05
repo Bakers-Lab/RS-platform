@@ -20,6 +20,9 @@ func SetupRouter(dB db.IDB) *gin.Engine {
 			v1Group.GET("/test", v1.TestHandler)
 			// 集成 Swagger
 			v1.RegisterDatasetRoutes(v1Group, dB)
+			v1.RegisterUserRoutes(v1Group, dB)
+			v1.RegisterInferRoutes(v1Group, dB)
+			v1.RegisterEvalRoutes(v1Group, dB)
 		}
 
 	}
